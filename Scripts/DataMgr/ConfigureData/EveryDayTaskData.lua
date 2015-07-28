@@ -1,0 +1,163 @@
+﻿module("EveryDayTaskData", package.seeall)
+
+local moduleName = "EveryDayTaskData";
+local m_database = {};
+_G[moduleName] = m_database;
+
+m_database["1_index"] = {
+id = 1,
+name = "完成普通关卡闯荡",
+times = 10,
+activityNum = 15,
+exp = 500,
+money = 300,
+itemInfo = "120001;1",
+icon = "chengjiu_4.png",
+taskimg = "meirirenwu_bt_putongguanka.png",
+tiaozhuan = 2,
+uiming = "",
+}
+m_database["2_index"] = {
+id = 2,
+name = "完成精英关卡闯荡",
+times = 5,
+activityNum = 15,
+exp = 500,
+money = 300,
+itemInfo = "120001;1",
+icon = "chengjiu_4.png",
+taskimg = "meirirenwu_bt_jingyingguanka.png",
+tiaozhuan = 2,
+uiming = "",
+}
+m_database["3_index"] = {
+id = 3,
+name = "完成竞技场挑战",
+times = 3,
+activityNum = 20,
+exp = 800,
+money = 400,
+itemInfo = "120001;1",
+icon = "chengjiu_3.png",
+taskimg = "meirirenwu_bt_jingjichang.png",
+tiaozhuan = 1,
+uiming = "JJCUI",
+}
+m_database["4_index"] = {
+id = 4,
+name = "完成活动副本",
+times = 2,
+activityNum = 20,
+exp = 500,
+money = 400,
+itemInfo = "120001;1",
+icon = "chengjiu_4.png",
+taskimg = "meirirenwu_bt_huodongfuben.png",
+tiaozhuan = 1,
+uiming = "ActivityType",
+}
+m_database["5_index"] = {
+id = 5,
+name = "训练场抢位",
+times = 1,
+activityNum = 15,
+exp = 800,
+money = 300,
+itemInfo = "120001;1",
+icon = "chengjiu_3.png",
+taskimg = "meirirenwu_bt_xunlianchang.png",
+tiaozhuan = 1,
+uiming = "TrainUI",
+}
+m_database["6_index"] = {
+id = 6,
+name = "精灵武器喂养",
+times = 1,
+activityNum = 10,
+exp = 300,
+money = 500,
+itemInfo = "120001;1",
+icon = "chengjiu_5.png",
+taskimg = "meirirenwu_bt_jinglingwuqi.png",
+tiaozhuan = 1,
+uiming = "WeaponUI",
+}
+m_database["7_index"] = {
+id = 7,
+name = "世界频道发言",
+times = 1,
+activityNum = 10,
+exp = 300,
+money = 500,
+itemInfo = "120001;1",
+icon = "chengjiu_7.png",
+taskimg = "meirirenwu_bt_pindaofayan.png",
+tiaozhuan = 1,
+uiming = "Chat",
+}
+m_database["8_index"] = {
+id = 8,
+name = "点星",
+times = 1,
+activityNum = 15,
+exp = 600,
+money = 300,
+itemInfo = "120001;1",
+icon = "chengjiu_8.png",
+taskimg = "chengjiu_wz_dianxing.png",
+tiaozhuan = 1,
+uiming = "PointStar",
+}
+m_database["9_index"] = {
+id = 9,
+name = "重置一次装备",
+times = 1,
+activityNum = 20,
+exp = 300,
+money = 400,
+itemInfo = "120001;1",
+icon = "chengjiu_5.png",
+taskimg = "chengjiu_wz_zhuangbei.png",
+tiaozhuan = 1,
+uiming = "Transform",
+}
+m_database["10_index"] = {
+id = 10,
+name = "许愿",
+times = 3,
+activityNum = 10,
+exp = 400,
+money = 500,
+itemInfo = "120001;1",
+icon = "chengjiu_2.png",
+taskimg = "meirirenwu_bt_choujiang.png",
+tiaozhuan = 1,
+uiming = "WishMain",
+}
+m_database["11_index"] = {
+id = 11,
+name = "点金",
+times = 1,
+activityNum = 10,
+exp = 600,
+money = 500,
+itemInfo = "120001;1",
+icon = "chengjiu_1.png",
+taskimg = "meirirenwu_bt_dianjin.png",
+tiaozhuan = 1,
+uiming = "PurchaseGold",
+}
+m_database["12_index"] = {
+id = 12,
+name = "购买体力",
+times = 1,
+activityNum = 10,
+exp = 400,
+money = 500,
+itemInfo = "120001;1",
+icon = "chengjiu_1.png",
+taskimg = "meirirenwu_bt_goumaitili.png",
+tiaozhuan = 1,
+uiming = "Shop",
+}
+

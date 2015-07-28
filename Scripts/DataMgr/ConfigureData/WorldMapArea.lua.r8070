@@ -1,0 +1,107 @@
+﻿module("WorldMapArea", package.seeall)
+
+local moduleName = "WorldMapArea";
+local m_database = {};
+_G[moduleName] = m_database;
+
+m_database["id_1"] = {
+id = 1,
+angle = -10,
+name = "区域1名称",
+}
+m_database["id_2"] = {
+id = 2,
+angle = -10,
+name = "区域2名称",
+}
+m_database["id_3"] = {
+id = 3,
+angle = -19,
+name = "区域3名称",
+}
+m_database["id_4"] = {
+id = 4,
+angle = -29,
+name = "区域4名称",
+}
+m_database["id_5"] = {
+id = 5,
+angle = -36,
+name = "区域5名称",
+}
+m_database["id_6"] = {
+id = 6,
+angle = -36,
+name = "区域6名称",
+}
+m_database["id_7"] = {
+id = 7,
+angle = -36,
+name = "区域7名称",
+}
+m_database["id_8"] = {
+id = 8,
+angle = -27,
+name = "区域8名称",
+}
+m_database["id_9"] = {
+id = 9,
+angle = -19,
+name = "区域9名称",
+}
+m_database["id_10"] = {
+id = 10,
+angle = -11,
+name = "区域10名称",
+}
+m_database["id_11"] = {
+id = 11,
+angle = 0,
+name = "区域11名称",
+}
+m_database["id_12"] = {
+id = 12,
+angle = 5,
+name = "区域12名称",
+}
+m_database["id_13"] = {
+id = 13,
+angle = 2,
+name = "区域13名称",
+}
+m_database["id_14"] = {
+id = 14,
+angle = 5,
+name = "区域14名称",
+}
+m_database["id_15"] = {
+id = 15,
+angle = 12,
+name = "区域15名称",
+}
+m_database["id_16"] = {
+id = 16,
+angle = 16,
+name = "区域16名称",
+}
+m_database["id_17"] = {
+id = 17,
+angle = 19,
+name = "区域17名称",
+}
+m_database["id_18"] = {
+id = 18,
+angle = 27,
+name = "区域18名称",
+}
+m_database["id_19"] = {
+id = 19,
+angle = 34,
+name = "区域19名称",
+}
+m_database["id_20"] = {
+id = 20,
+angle = 34,
+name = "区域20名称",
+}
+

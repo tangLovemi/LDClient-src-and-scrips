@@ -1,0 +1,142 @@
+-- --
+-- -- Author: gaojiefeng
+-- -- Date: 2015-01-29 13:52:14
+-- --
+-- module("HuntInfoUI", package.seeall)
+-- ------------------------赏金猎人选择界面----------------------
+-- local m_rootLayer= nil
+-- local m_UILayout= nil
+-- local m_isCreate= false
+-- local m_Current_Task = nil
+-- local m_Clicked_Task = nil
+-- local m_Current_Task_Status = nil
+-- local m_Clicked_Task_Status = nil
+-- local m_Current_Task_Num = nil
+-- local m_checkInfoBtn = nil
+-- local m_doHuntBtn = nil
+
+-- local function closeBtnOnClick(sender,eventType)
+-- 	if eventType == TOUCH_EVENT_TYPE_END then
+-- 		UIManager.close("HuntInfoUI")
+-- 	end
+-- end
+-- function doHuntBtnOnClick(sender,eventType )
+-- 	if eventType == TOUCH_EVENT_TYPE_END then
+-- 	end
+-- end
+-- function checkInfoBtnOnClick(sender,eventType)
+-- 	if eventType == TOUCH_EVENT_TYPE_END then
+-- 		UIManager.close("HuntInfoUI")
+-- 		local params ={}
+-- 		params.current_Task = m_Current_Task
+-- 		params.current_Task_Status = m_Current_Task_Status
+-- 		params.current_Task_Num = m_Current_Task_Num
+-- 		UIManager.open("HuntDetailUI",params)
+-- 	end
+-- end
+
+
+-- function initView()
+-- 	local name_text = tolua.cast(m_UILayout:getWidgetByName("name_text"),"Label")    
+-- 	name_text:setText(DataTableManager.getValue("Hunt", m_Clicked_Task.."_index", "huntName"))
+-- 	local ability_text = tolua.cast(m_UILayout:getWidgetByName("ability_text"),"Label")
+-- 	ability_text:setText(DataTableManager.getValue("Hunt", m_Clicked_Task.."_index", "ability"))
+-- 	local area_text = tolua.cast(m_UILayout:getWidgetByName("area_text"),"Label")
+-- 	area_text:setText(DataTableManager.getValue("Hunt", m_Clicked_Task.."_index", "areadesc"))
+-- 	local info_text = tolua.cast(m_UILayout:getWidgetByName("info_text"),"Label")
+-- 	info_text:setText(DataTableManager.getValue("Hunt", m_Clicked_Task.."_index", "info"))
+-- 	-- local num1_text = tolua.cast(m_UILayout:getWidgetByName("num1_text"),"Label")
+-- 	-- num1_text:setText(DataTableManager.getValue("Hunt", m_Clicked_Task.."_index", "huntName"))
+-- 	-- local num2_text = tolua.cast(m_UILayout:getWidgetByName("num2_text"),"Label")
+-- 	-- num2_text:setText(DataTableManager.getValue("Hunt", m_Clicked_Task.."_index", "huntName"))
+-- 	-- local num3_text = tolua.cast(m_UILayout:getWidgetByName("num3_text"),"Label")
+-- 	-- num3_text:setText(DataTableManager.getValue("Hunt", m_Clicked_Task.."_index", "huntName"))
+-- 	local hunt_name = tolua.cast(m_UILayout:getWidgetByName("hunt_name"),"Label")
+-- 	hunt_name:setText(DataTableManager.getValue("Hunt", m_Clicked_Task.."_index", "huntName"))
+-- 	local hunt_img = tolua.cast(m_UILayout:getWidgetByName("hunt_img"), "ImageView");
+-- 	local imageName = DataTableManager.getValue("Hunt", m_Clicked_Task.."_index", "img")
+-- 	imageString = PATH_RES_IMAGE_HUNTER..imageName..".png"
+-- 	hunt_img:loadTexture(imageString); 
+-- 	--装备图片，暂时还没有
+-- 	-- 	local hunt_img = tolua.cast(m_UILayout:getWidgetByName("wuping1_img"), "ImageView");
+-- 	-- local imageName = DataTableManager.getValue("Hunt", m_Clicked_Task.."_index", "img")
+-- 	-- imageString = PATH_RES_IMAGE_HUNTER..imageName..".png"
+-- 	-- hunt_img:loadTexture(imageString); 
+-- 	-- 	local hunt_img = tolua.cast(m_UILayout:getWidgetByName("wuping1_img"), "ImageView");
+-- 	-- local imageName = DataTableManager.getValue("Hunt", m_Clicked_Task.."_index", "img")
+-- 	-- imageString = PATH_RES_IMAGE_HUNTER..imageName..".png"
+-- 	-- hunt_img:loadTexture(imageString); 
+-- 	-- 	local hunt_img = tolua.cast(m_UILayout:getWidgetByName("wuping1_img"), "ImageView");
+-- 	-- local imageName = DataTableManager.getValue("Hunt", m_Clicked_Task.."_index", "img")
+-- 	-- imageString = PATH_RES_IMAGE_HUNTER..imageName..".png"
+-- 	-- hunt_img:loadTexture(imageString); 
+-- 	-- 	local hunt_img = tolua.cast(m_UILayout:getWidgetByName("wuping1_img"), "ImageView");
+-- 	-- local imageName = DataTableManager.getValue("Hunt", m_Clicked_Task.."_index", "img")
+-- 	-- imageString = PATH_RES_IMAGE_HUNTER..imageName..".png"
+-- 	-- hunt_img:loadTexture(imageString); 
+-- 	-- if(m_Clicked_Task_Status ==1) then
+-- 	-- 	m_doHuntBtn:setTitleText("尚未开启")
+-- 	-- elseif(m_Clicked_Task_Status ==2) then
+-- 	-- 	m_doHuntBtn:setTitleText("通缉此人")
+-- 	-- 	-- m_doHuntBtn:setTouchEnabled(true)
+-- 	-- elseif(m_Clicked_Task_Status ==3) then
+-- 	-- 	m_doHuntBtn:setTitleText("任务已领取")
+-- 	-- elseif(m_Clicked_Task_Status ==4) then
+-- 	-- 	m_doHuntBtn:setTitleText("领取奖励")
+-- 	-- 	-- m_doHuntBtn:setTouchEnabled(true)
+-- 	-- else
+-- 	-- 	m_doHuntBtn:setTitleText("任务已完成")
+-- 	-- end
+
+-- end
+
+-- function create()
+-- 	if (not m_isCreate ) then
+-- 		m_isCreate= true
+-- 		m_rootLayer = CCLayer:create();
+-- 		m_rootLayer:retain()
+		
+-- 		local UISource = GUIReader:shareReader():widgetFromJsonFile(PATH_RES_UI .. "shangji3_1.json");
+-- 	    m_UILayout = TouchGroup:create();
+-- 	    m_UILayout:addWidget(UISource);
+-- 	    m_rootLayer:addChild(m_UILayout);
+-- 	    local closeBtn = tolua.cast(m_UILayout:getWidgetByName("close_btn"), "Button");
+-- 	    closeBtn:addTouchEventListener(closeBtnOnClick);
+-- 		m_doHuntBtn 	= tolua.cast(m_UILayout:getWidgetByName("hunt_btn"), "Button");
+-- 		m_doHuntBtn:addTouchEventListener(doHuntBtnOnClick);
+-- 		m_doHuntBtn:setTouchEnabled(false)
+-- 		m_doHuntBtn:setVisible(false)
+-- 		m_checkInfoBtn 	= tolua.cast(m_UILayout:getWidgetByName("check_btn"), "Button");
+-- 		m_checkInfoBtn:addTouchEventListener(checkInfoBtnOnClick);
+-- 		m_checkInfoBtn:setTitleText("返回全部")
+-- 	end
+   
+-- end
+
+
+-- function open(params)
+-- 	create();
+-- 	local uiLayer = getGameLayer(SCENE_UI_LAYER);
+-- 	uiLayer:addChild(m_rootLayer);
+
+-- 	m_Clicked_Task = params.clicked_Task
+-- 	m_Clicked_Task_Status = params.clicked_Task_Status
+-- 	m_Current_Task = params.current_Task
+-- 	m_Current_Task_Status = params.current_Task_Status
+-- 	--1,不可接取，2，可以接但未接，3，接任务未完成，4，接任务已完成未领奖励，5接任务已完成领取奖励
+-- 	m_Current_Task_Num = 2
+-- 	initView()
+	
+-- end
+-- function close()
+-- 	local  uiLayer = getGameLayer(SCENE_UI_LAYER);
+-- 	uiLayer:removeChild(m_rootLayer,false);
+-- end
+
+-- function remove()
+-- 	if (m_isCreate ) then
+-- 		m_rootLayer:removeAllChildrenWithCleanup(true);	
+-- 		m_rootLayer:release();
+-- 		m_rootLayer= nil
+-- 	end
+-- end

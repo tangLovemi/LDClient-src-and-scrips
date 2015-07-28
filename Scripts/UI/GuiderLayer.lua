@@ -1,0 +1,247 @@
+-- -- --
+-- -- -- Author: Gao Jiefeng
+-- -- -- Date: 2015-04-14 10:27:27
+-- -- --
+-- module("GuiderLayer", package.seeall)
+
+-- require("extern")
+-- local m_isCreate = false;
+-- local m_isOpen = false;
+-- local m_rootLayer = nil;
+-- local m_uiLayer = nil;
+-- local m_UILayout = nil
+-- local m_posInfo = {}
+-- local m_ShieldColor = ccc4f(0,0,0,(180/255))
+-- local m_localStepRecord = 1
+-- local m_isRegister = false
+-- local m_ActionIndex= 0
+-- local m_PointRect = CCRect(0,200,1136,300)
+-- local m_callback = nil
+-- local m_pointBeginX = 0 
+-- local m_pointBeginY = 0 
+-- local m_armature = nil
+-- local m_PositionEffect = nil
+-- local function initDataTable()
+--     local posInfo = DataTableManager.getTableByName("NewGuider")
+--     m_posInfo =  {
+--         ["step1_1"]={["posX"] =tonumber(posInfo["1001_index"]["posX"]),["posY"] =tonumber(posInfo["1001_index"]["posY"]),["width"]=tonumber(posInfo["1001_index"]["width"]),["height"]=tonumber(posInfo["1001_index"]["height"]),["animName"]= "xinshouyindao",["actionName"] = "dianji",["callback"] = GuideDatas.guideStep1_1CallBack},
+--         ["step2_1"]={["posX"] =tonumber(posInfo["2001_index"]["posX"]),["posY"] =tonumber(posInfo["2001_index"]["posY"]),["width"]=tonumber(posInfo["2001_index"]["width"]),["height"]=tonumber(posInfo["2001_index"]["height"]),["animName"]= "xinshouyindao",["actionName"] = "dianji",["callback"] = GuideDatas.guideStep2_1CallBack},
+--         ["step3_1"]={["posX"] =tonumber(posInfo["3001_index"]["posX"]),["posY"] =tonumber(posInfo["3001_index"]["posY"]),["width"]=tonumber(posInfo["3001_index"]["width"]),["height"]=tonumber(posInfo["3001_index"]["height"]),["animName"]= "xinshouyindao",["actionName"] = "dianji",["callback"] = GuideDatas.guideStep3_1CallBack},
+--         ["step3_2"]={["posX"] =tonumber(posInfo["3002_index"]["posX"]),["posY"] =tonumber(posInfo["3002_index"]["posY"]),["width"]=tonumber(posInfo["3002_index"]["width"]),["height"]=tonumber(posInfo["3002_index"]["height"]),["animName"]= "xinshouyindao",["actionName"] = "xiahua",["callback"] = GuideDatas.guideStep3_2CallBack},
+--         ["step3_3"]={["posX"] =tonumber(posInfo["3003_index"]["posX"]),["posY"] =tonumber(posInfo["3003_index"]["posY"]),["width"]=tonumber(posInfo["3003_index"]["width"]),["height"]=tonumber(posInfo["3003_index"]["height"]),["animName"]= "xinshouyindao",["actionName"] = "dianji",["callback"] = GuideDatas.guideStep3_3CallBack},
+--         ["step4_1"]={["posX"] =tonumber(posInfo["4001_index"]["posX"]),["posY"] =tonumber(posInfo["4001_index"]["posY"]),["width"]=tonumber(posInfo["4001_index"]["width"]),["height"]=tonumber(posInfo["4001_index"]["height"]),["animName"]= "xinshouyindao",["actionName"] = "dianji",["callback"] = GuideDatas.guideStep4_1CallBack},
+--         ["step4_2"]={["posX"] =tonumber(posInfo["4002_index"]["posX"]),["posY"] =tonumber(posInfo["4002_index"]["posY"]),["width"]=tonumber(posInfo["4002_index"]["width"]),["height"]=tonumber(posInfo["4002_index"]["height"]),["animName"]= "xinshouyindao",["actionName"] = "dianji",["callback"] = GuideDatas.guideStep4_2CallBack},
+--         ["step4_3"]={["posX"] =tonumber(posInfo["4003_index"]["posX"]),["posY"] =tonumber(posInfo["4003_index"]["posY"]),["width"]=tonumber(posInfo["4003_index"]["width"]),["height"]=tonumber(posInfo["4003_index"]["height"]),["animName"]= "xinshouyindao",["actionName"] = "dianji",["callback"] = GuideDatas.guideStep4_3CallBack},
+--         ["step4_4"]={["posX"] =tonumber(posInfo["4004_index"]["posX"]),["posY"] =tonumber(posInfo["4004_index"]["posY"]),["width"]=tonumber(posInfo["4004_index"]["width"]),["height"]=tonumber(posInfo["4004_index"]["height"]),["animName"]= "xinshouyindao",["actionName"] = "xiahua",["callback"] = GuideDatas.guideStep4_4CallBack},
+--         ["step4_5"]={["posX"] =tonumber(posInfo["4005_index"]["posX"]),["posY"] =tonumber(posInfo["4005_index"]["posY"]),["width"]=tonumber(posInfo["4005_index"]["width"]),["height"]=tonumber(posInfo["4005_index"]["height"]),["animName"]= "xinshouyindao",["actionName"] = "dianji",["callback"] = GuideDatas.guideStep4_5CallBack},        
+--         ["step5_1"]={["posX"] =tonumber(posInfo["5001_index"]["posX"]),["posY"] =tonumber(posInfo["5001_index"]["posY"]),["width"]=tonumber(posInfo["5001_index"]["width"]),["height"]=tonumber(posInfo["5001_index"]["height"]),["animName"]= "xinshouyindao",["actionName"] = "dianji",["callback"] = GuideDatas.guideStep5_1CallBack},
+--         ["step5_2"]={["posX"] =tonumber(posInfo["5002_index"]["posX"]),["posY"] =tonumber(posInfo["5002_index"]["posY"]),["width"]=tonumber(posInfo["5002_index"]["width"]),["height"]=tonumber(posInfo["5002_index"]["height"]),["animName"]= "xinshouyindao",["actionName"] = "dianji",["callback"] = GuideDatas.guideStep5_2CallBack},
+--         ["step5_3"]={["posX"] =tonumber(posInfo["5003_index"]["posX"]),["posY"] =tonumber(posInfo["5003_index"]["posY"]),["width"]=tonumber(posInfo["5003_index"]["width"]),["height"]=tonumber(posInfo["5003_index"]["height"]),["animName"]= "xinshouyindao",["actionName"] = "dianji",["callback"] = GuideDatas.guideStep5_3CallBack},
+--         ["step5_4"]={["posX"] =tonumber(posInfo["5004_index"]["posX"]),["posY"] =tonumber(posInfo["5004_index"]["posY"]),["width"]=tonumber(posInfo["5004_index"]["width"]),["height"]=tonumber(posInfo["5004_index"]["height"]),["animName"]= "xinshouyindao",["actionName"] = "dianji",["callback"] = GuideDatas.guideStep5_4CallBack},
+--         ["step6_1"]={["posX"] =tonumber(posInfo["6001_index"]["posX"]),["posY"] =tonumber(posInfo["6001_index"]["posY"]),["width"]=tonumber(posInfo["6001_index"]["width"]),["height"]=tonumber(posInfo["6001_index"]["height"]),["animName"]= "xinshouyindao",["actionName"] = "xiahua",["callback"] = GuideDatas.guideStep6_1CallBack},
+--         ["step6_2"]={["posX"] =tonumber(posInfo["6002_index"]["posX"]),["posY"] =tonumber(posInfo["6002_index"]["posY"]),["width"]=tonumber(posInfo["6002_index"]["width"]),["height"]=tonumber(posInfo["6002_index"]["height"]),["animName"]= "xinshouyindao",["actionName"] = "xiahua",["callback"] = GuideDatas.guideStep6_2CallBack},
+--         ["step6_3"]={["posX"] =tonumber(posInfo["6003_index"]["posX"]),["posY"] =tonumber(posInfo["6003_index"]["posY"]),["width"]=tonumber(posInfo["6003_index"]["width"]),["height"]=tonumber(posInfo["6003_index"]["height"]),["animName"]= "xinshouyindao",["actionName"] = "dianji",["callback"] = GuideDatas.guideStep6_3CallBack},
+--         ["step6_4"]={["posX"] =tonumber(posInfo["6004_index"]["posX"]),["posY"] =tonumber(posInfo["6004_index"]["posY"]),["width"]=tonumber(posInfo["6004_index"]["width"]),["height"]=tonumber(posInfo["6004_index"]["height"]),["animName"]= "xinshouyindao",["actionName"] = "dianji",["callback"] = GuideDatas.guideStep6_4CallBack},
+--         ["step7_1"]={["posX"] =tonumber(posInfo["7001_index"]["posX"]),["posY"] =tonumber(posInfo["7001_index"]["posY"]),["width"]=tonumber(posInfo["7001_index"]["width"]),["height"]=tonumber(posInfo["7001_index"]["height"]),["animName"]= "xinshouyindao",["actionName"] = "dianji",["callback"] = GuideDatas.guideStep7_1CallBack},
+--         ["step7_2"]={["posX"] =tonumber(posInfo["7002_index"]["posX"]),["posY"] =tonumber(posInfo["7002_index"]["posY"]),["width"]=tonumber(posInfo["7002_index"]["width"]),["height"]=tonumber(posInfo["7002_index"]["height"]),["animName"]= "xinshouyindao",["actionName"] = "dianji",["callback"] = GuideDatas.guideStep7_2CallBack},
+--         ["step7_3"]={["posX"] =tonumber(posInfo["7003_index"]["posX"]),["posY"] =tonumber(posInfo["7003_index"]["posY"]),["width"]=tonumber(posInfo["7003_index"]["width"]),["height"]=tonumber(posInfo["7003_index"]["height"]),["animName"]= "xinshouyindao",["actionName"] = "dianji",["callback"] = GuideDatas.guideStep7_3CallBack},
+--         ["step7_4"]={["posX"] =tonumber(posInfo["7004_index"]["posX"]),["posY"] =tonumber(posInfo["7004_index"]["posY"]),["width"]=tonumber(posInfo["7004_index"]["width"]),["height"]=tonumber(posInfo["7004_index"]["height"]),["animName"]= "xinshouyindao",["actionName"] = "shanghua",["callback"] = GuideDatas.guideStep7_4CallBack},
+--         ["step7_5"]={["posX"] =tonumber(posInfo["7005_index"]["posX"]),["posY"] =tonumber(posInfo["7005_index"]["posY"]),["width"]=tonumber(posInfo["7005_index"]["width"]),["height"]=tonumber(posInfo["7005_index"]["height"]),["animName"]= "xinshouyindao",["actionName"] = "dianji",["callback"] = GuideDatas.guideStep7_5CallBack},
+--     }
+
+-- end
+
+-- local function createAnime(animActorName,x,y,w,h,actionIndex)
+--     local path = PATH_RES_OTHER .. animActorName .. ".ExportJson";
+--     CCArmatureDataManager:sharedArmatureDataManager():removeArmatureFileInfo(path)
+--     CCArmatureDataManager:sharedArmatureDataManager():addArmatureFileInfo(path);
+--     local armature = CCArmature:create(animActorName)
+
+--     armature:getAnimation():playWithIndex(actionIndex)
+--     armature:setPosition(ccp(x+w/2,y+h/2))
+--     m_PositionEffect = CCPoint(x+w/2,y+h/2)
+--     if TaskManager.getNewGuideInfo()["step"] ==4 then
+--         if TaskManager.getLocalStepRecord() ==4 then
+--             armature:getAnimation():playWithIndex(0)
+--             armature:setPosition(ccp(323,400))
+--             local actList = CCArray:create()
+--             local moveto = CCMoveTo:create(1, CCPoint(408, 86))
+--             local callback = CCCallFunc:create(function()   
+--                             armature:setPosition(ccp(323,400))
+--                     end)
+--             actList:addObject(moveto)
+--             actList:addObject(callback)
+--             armature:runAction(CCRepeatForever:create(CCSequence:create(actList) ) )
+--         end
+--     end
+    
+--     m_rootLayer:addChild(armature)
+-- end
+-- -- function createEffect(posx,posy)
+
+
+-- --     -- m_rootLayer:addChild(m_armature);
+-- -- end
+-- function palyEffect()
+--     if m_armature~= nil then
+--         m_armature:removeFromParentAndCleanup(true)
+--         m_armature = nil
+--         -- return
+--     end
+--     CCArmatureDataManager:sharedArmatureDataManager():addArmatureFileInfo(PATH_RES_OTHER.."tishiyinying.ExportJson");
+--     m_armature = CCArmature:create("tishiyinying");
+--     m_armature:setPosition(m_PositionEffect);
+--     -- m_armature:getAnimation():pause();
+--     CCArmatureDataManager:purge();
+--     m_armature:getAnimation():playWithIndex(0);
+--     m_rootLayer:addChild(m_armature,100);
+    
+--     local removeEffectNode = function ()
+--         if m_armature~= nil then
+--             m_armature:removeFromParentAndCleanup(true)
+--             m_armature = nil
+--         end
+--     end
+--     performWithDelay(m_rootLayer,removeEffectNode, 0.6)
+-- end
+-- function createPolygon(posX,posY,width,height)
+--         -- local tempnode = CCDrawNode:create()
+--         -- local point1 = CCPoint(posX,posY)
+--         -- local point2 = CCPoint(posX,posY+height)
+--         -- local point3 = CCPoint(posX+width,posY+height)
+--         -- local point4 = CCPoint(posX+width,posY)
+--         -- tempnode:drawpolygonLua(CCPoint(0,0),CCPoint(0,640),point2,point1,4,m_ShieldColor,0,ccc4f(0, 0, 0, 0))
+--         -- tempnode:drawpolygonLua(CCPoint(0,640),CCPoint(1136,640),point3,point2,4,m_ShieldColor,0,ccc4f(0, 0, 0, 0))
+--         -- tempnode:drawpolygonLua(CCPoint(1136,640),point3,point4,CCPoint(1136,0),4,m_ShieldColor,0,ccc4f(0, 0, 0, 0))
+--         -- tempnode:drawpolygonLua(CCPoint(1136,0),point4,point1,CCPoint(0, 0),4,m_ShieldColor,0,ccc4f(0, 0, 0, 0))
+--         -- m_rootLayer:addChild(tempnode,-1)
+--         -- createEffect(posX,posY)
+-- end
+
+-- function GuideTouchBegin(x,y)
+--     if m_PointRect:containsPoint(ccp(x,y)) then
+--         -- GuideDatas.touchBegan(x, y)
+--         m_pointBeginX = x 
+--         m_pointBeginY = y
+--     else
+--         palyEffect()
+--     end
+-- end
+-- function GuideTouchMoved(x,y)
+--     if m_PointRect:containsPoint(ccp(x,y)) then
+--         -- GuideDatas.touchMoved(x,y)
+--     end
+-- end
+-- function GuideTouchEnded(x,y)
+--     if m_PointRect:containsPoint(ccp(x,y)) then
+--         -- GuideDatas.touchEnded(x, y)
+--         if m_ActionIndex == 0 then--dianji           
+--                 if m_callback~= nil then
+--                     m_callback()
+--                 end            
+--         elseif (m_ActionIndex == 1 or m_ActionIndex == 2) then --zuohua,youhua
+--             if math.abs(m_pointBeginX -x)>100 then
+--                 m_callback()
+--             end
+--         elseif (m_ActionIndex == 3 or m_ActionIndex == 4) then --shanghua,xiahua
+--             if math.abs(m_pointBeginY -y)>100 then
+--                 m_callback()
+--             end
+--         end
+--     end
+
+
+-- end
+
+-- function create()
+--     if(not m_isCreate) then
+--         m_isCreate = true;
+--         m_rootLayer = CCLayer:create();
+--         m_rootLayer:retain();
+--         local UISource = GUIReader:shareReader():widgetFromJsonFile(PATH_RES_UI .. "NewerGuideUI_1.json");
+--         m_UILayout = TouchGroup:create();
+--         m_UILayout:addWidget(UISource);
+--         m_rootLayer:addChild(m_UILayout);
+--         local panel = tolua.cast(m_UILayout:getWidgetByName("Panel_14"),"Layout")
+--         local function swalloTouch(event,eventType)
+--             if eventType == TOUCH_EVENT_TYPE_BEGIN then
+--                 local pos = panel:getTouchStartPos()
+--                 GuideTouchBegin(pos.x,pos.y)
+--             elseif eventType == TOUCH_EVENT_TYPE_MOVE then
+--                 local pos = panel:getTouchMovePos()
+--                 GuideTouchMoved(pos.x,pos.y)
+--             elseif eventType == TOUCH_EVENT_TYPE_END then
+--                 local pos = panel:getTouchEndPos()
+--                 GuideTouchEnded(pos.x,pos.y)
+--             end
+--         end        
+--         panel:addTouchEventListener(swalloTouch)
+
+
+
+--         -- local tempNode = CCClipingNode:create()
+--     end
+-- end
+
+-- function open()
+--     if (not m_isOpen) then
+--         m_isOpen = true;
+--         local uiLayer = getGameLayer(SCENE_GUIDE_LAYER);
+--         uiLayer:addChild(m_rootLayer);
+--         --屏蔽事件（主城和世界地图）
+
+--         initDataTable()
+--         local guideData = TaskManager.getNewGuideInfo()
+
+--         --调整到相应的主城位置
+--         if guideData["step"] == 1 then
+--         else
+--         end
+--         m_localStepRecord = TaskManager.getLocalStepRecord()
+--         local guideDataNow = m_posInfo["step"..guideData["step"].."_"..m_localStepRecord] 
+--         createPolygon(guideDataNow.posX,guideDataNow.posY,guideDataNow.width,guideDataNow.height)
+        
+--         m_PointRect = CCRect(guideDataNow.posX,guideDataNow.posY,guideDataNow.width,guideDataNow.height)
+--         m_callback = guideDataNow.callback
+
+
+--         if guideDataNow.actionName  == "dianji" then 
+--             m_ActionIndex = 0
+--         elseif guideDataNow.actionName  == "zuohua" then 
+--             m_ActionIndex = 1
+--         elseif guideDataNow.actionName  == "youhua" then 
+--             m_ActionIndex = 2
+--         elseif guideDataNow.actionName  == "shanghua" then 
+--             m_ActionIndex = 3
+--         elseif guideDataNow.actionName  == "xiahua" then 
+--             m_ActionIndex = 4
+--         end
+--         createAnime(guideDataNow["animName"],guideDataNow["posX"],guideDataNow["posY"],guideDataNow["width"],guideDataNow["height"], m_ActionIndex)
+--     end
+-- end
+
+-- function close()
+--     if (m_isOpen) then
+--         m_isOpen = false;
+--         local uiLayer = getGameLayer(SCENE_GUIDE_LAYER);
+--         uiLayer:removeChild(m_rootLayer, false);
+--         TouchDispatcher.init()
+--     end
+-- end
+
+-- function remove()
+--     if(m_isCreate) then
+--         m_isCreate = false;
+--         if(m_rootLayer) then
+--             m_rootLayer:removeAllChildrenWithCleanup(true);
+--             m_rootLayer:release();
+--         end
+--         m_isCreate = nil;
+--         m_isOpen = nil;
+--         m_rootLayer = nil;
+--         m_uiLayer = nil;
+--     end
+-- end
+-- function getRootLayer()
+--     return m_rootLayer
+-- end

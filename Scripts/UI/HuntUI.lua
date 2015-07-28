@@ -1,0 +1,185 @@
+-- --
+-- -- Author: gaojiefeng
+-- -- Date: 2015-01-29 13:52:14
+-- --
+-- module("HuntUI", package.seeall)
+-- ------------------------赏金猎人选择界面----------------------
+-- local m_rootLayer= nil
+-- local m_isCreate = false 
+-- local m_isOpen = false;
+-- local m_UILayout= nil
+-- local m_Current_Task = nil
+-- local m_Current_Task_Status = nil
+-- local m_Current_Task_Num = nil
+-- local m_checkInfoBtn = nil
+-- local m_doHuntBtn = nil
+
+-- local function closeBtnOnClick(sender,eventType)
+-- 	if eventType == TOUCH_EVENT_TYPE_END then
+-- 		UIManager.close("HuntUI")
+-- 		-- local temptabel = NpcInfoManager.getHuntSceneLevels()
+-- 	end
+-- end
+-- function doHuntBtnOnClick(sender,eventType )
+-- 	if eventType == TOUCH_EVENT_TYPE_END then
+-- 		if(m_Current_Task_Status==2) then
+-- 			NetMessageManager.sendMessage(NETWORK_MESSAGE_SEND_CLICK_NPC_TASKSTATUS_CHANGE, {710001,3});
+-- 			NetMessageManager.registerMessage(NETWORK_MESSAGE_SEND_REWARDSTATUSCHANGE, recieveDataOnTaskStatusChange);
+-- 			m_doHuntBtn:loadTextures(PATH_CCS_RES.."tongji_jinxing.png","","")
+-- 			m_doHuntBtn:setTouchEnabled(false)
+-- 			m_Current_Task_Status = 3
+-- 		elseif(m_Current_Task_Status==4) then
+-- 			NetMessageManager.sendMessage(NETWORK_MESSAGE_SEND_CLICK_NPC_TASKSTATUS_CHANGE, {710001,3});
+-- 			NetMessageManager.registerMessage(NETWORK_MESSAGE_SEND_REWARDSTATUSCHANGE, recieveDataOnTaskStatusChange);
+-- 			m_doHuntBtn:loadTextures(PATH_CCS_RES.."tongji_wancheng.png","","")
+-- 			m_doHuntBtn:setTouchEnabled(false)
+-- 		end
+-- 	end
+-- end
+-- function checkInfoBtnOnClick(sender,eventType)
+-- 	if eventType == TOUCH_EVENT_TYPE_END then
+-- 		UIManager.close("HuntUI")
+-- 		local params ={}
+-- 		params.current_Task = m_Current_Task
+-- 		params.current_Task_Status = m_Current_Task_Status
+-- 		params.current_Task_Num = m_Current_Task_Num
+-- 		UIManager.open("HuntDetailUI",params)
+
+-- 	end
+-- end
+
+-- local function recieveDataOnTaskStatusChange(messageType,messageData)
+-- 	NpcInfoManager.getHuntTaskInfo(710001,recieveDataOnHunter)
+-- end
+-- function recieveDataOnHunter(messageData)
+-- 	m_Current_Task = tonumber(messageData["task_id"])
+-- 	m_Current_Task_Status = messageData["status"]
+-- 	m_Current_Task_Num = messageData["num"]
+-- 	-- --1,不可接取，2，可以接但未接，3，接任务未完成，4，接任务已完成未领奖励，5接任务已完成领取奖励
+-- 	initView()
+-- end
+-- function initView()
+-- 	local name_text = tolua.cast(m_UILayout:getWidgetByName("name_text"),"Label")    
+-- 	name_text:setText(DataTableManager.getValue("Hunt", m_Current_Task.."_index", "huntName"))
+-- 	local ability_text = tolua.cast(m_UILayout:getWidgetByName("ability_text"),"Label")
+-- 	ability_text:setText(DataTableManager.getValue("Hunt", m_Current_Task.."_index", "ability"))
+-- 	local area_text = tolua.cast(m_UILayout:getWidgetByName("area_text"),"Label")
+-- 	area_text:setText(DataTableManager.getValue("Hunt", m_Current_Task.."_index", "areadesc"))
+-- 	local info_text = tolua.cast(m_UILayout:getWidgetByName("info_text"),"Label")
+-- 	info_text:setText(DataTableManager.getValue("Hunt", m_Current_Task.."_index", "info"))
+
+-- 	local hunt_img = tolua.cast(m_UILayout:getWidgetByName("hunt_img"), "ImageView");
+-- 	local imageName = DataTableManager.getValue("Hunt", m_Current_Task.."_index", "img")
+-- 	imageString = PATH_RES_IMAGE_HUNTER..imageName..".png"
+-- 	hunt_img:loadTexture(imageString); 
+
+-- 	local rewardInfo1 = split(DataTableManager.getValue("Hunt", m_Current_Task.."_index", "reward1"),";")
+-- 	local rewardInfo2 = split(DataTableManager.getValue("Hunt", m_Current_Task.."_index", "reward2"),";")
+-- 	local rewardInfo3 = split(DataTableManager.getValue("Hunt", m_Current_Task.."_index", "reward3"),";")
+-- 	local num1_text = tolua.cast(m_UILayout:getWidgetByName("num1_text"),"Label")
+-- 	local num2_text = tolua.cast(m_UILayout:getWidgetByName("num2_text"),"Label")
+-- 	local num3_text = tolua.cast(m_UILayout:getWidgetByName("num3_text"),"Label")
+-- 	local itemImg1 = tolua.cast(m_UILayout:getWidgetByName("wuping1_img"), "ImageView");
+-- 	local itemImg2 = tolua.cast(m_UILayout:getWidgetByName("wuping2_img"), "ImageView");
+-- 	local itemImg3 = tolua.cast(m_UILayout:getWidgetByName("wuping3_img"), "ImageView");
+-- 	if (rewardInfo1[1]~=0)then		
+-- 		num1_text:setText(rewardInfo1[2])		
+-- 		itemImg1:loadTexture(GoodsManager.getIconPathById(rewardInfo1[1])); 
+-- 	else
+-- 		num1_text:setVisible(false)
+-- 		itemImg1:setVisible(false)
+-- 	end
+-- 	if (rewardInfo2[1]~=0)then		
+-- 		num2_text:setText(rewardInfo2[2])		
+-- 		itemImg2:loadTexture(GoodsManager.getIconPathById(rewardInfo2[1])); 
+-- 	else
+-- 		num2_text:setVisible(false)
+-- 		itemImg2:setVisible(false)
+-- 	end
+-- 	if (rewardInfo3[1]~=0)then		
+-- 		num3_text:setText(rewardInfo3[2])		
+-- 		itemImg1:loadTexture(GoodsManager.getIconPathById(rewardInfo3[1])); 
+-- 	else
+-- 		num3_text:setVisible(false)
+-- 		itemImg3:setVisible(false)
+-- 	end
+
+-- 	if(m_Current_Task_Status ==1) then
+-- 	elseif(m_Current_Task_Status ==2) then
+-- 		m_doHuntBtn:setTouchEnabled(true)		
+-- 		m_doHuntBtn:loadTextures(PATH_CCS_RES.."anniu_tongji_1.png","","")
+-- 	elseif(m_Current_Task_Status ==3) then
+-- 		m_doHuntBtn:loadTextures(PATH_CCS_RES.."tongji_jinxing.png","","")
+-- 	elseif(m_Current_Task_Status ==4) then
+-- 		m_doHuntBtn:loadTextures(PATH_CCS_RES.."anniu_tongji_2.png","","")
+-- 		m_doHuntBtn:setTouchEnabled(true)
+-- 	else
+-- 		m_doHuntBtn:loadTextures(PATH_CCS_RES.."tongji_wancheng.png","","")
+-- 	end
+
+-- end
+
+-- function create()
+-- 	if (not m_isCreate) then
+-- 		m_isCreate = true
+-- 		m_rootLayer = CCLayer:create();
+-- 		m_rootLayer:retain()
+		
+-- 		local UISource = GUIReader:shareReader():widgetFromJsonFile(PATH_RES_UI .. "shangji1_1.json");
+-- 	    m_UILayout = TouchGroup:create();
+-- 	    m_UILayout:addWidget(UISource);
+-- 	    m_rootLayer:addChild(m_UILayout);
+-- 	    local bottomLayer = tolua.cast(m_UILayout:getWidgetByName("Panel_14"),"Layout")
+-- 	    bottomLayer:addTouchEventListener(closeBtnOnClick);
+-- 	    local di_Layer = tolua.cast(m_UILayout:getWidgetByName("di_panel"),"Layout")
+-- 	    di_Layer:addTouchEventListener(closeBtnOnClick);
+-- 	    local closeBtn = tolua.cast(m_UILayout:getWidgetByName("close_btn"), "Button");
+-- 	    closeBtn:setVisible(false)
+-- 	    -- closeBtn:addTouchEventListener(closeBtnOnClick);
+-- 		m_doHuntBtn 	= tolua.cast(m_UILayout:getWidgetByName("hunt_btn"), "Button");
+-- 		m_doHuntBtn:addTouchEventListener(doHuntBtnOnClick);
+-- 		m_doHuntBtn:setTouchEnabled(false)
+-- 		m_checkInfoBtn 	= tolua.cast(m_UILayout:getWidgetByName("check_btn"), "Button");
+-- 		m_checkInfoBtn:addTouchEventListener(checkInfoBtnOnClick)
+-- 		m_checkInfoBtn:setTitleText("查看全部")
+-- 	end
+   
+-- end
+
+
+-- function open(params)
+-- 	if(not m_isOpen) then
+-- 		m_isOpen = true;
+-- 		local uiLayer = getGameLayer(SCENE_UI_LAYER);
+-- 		uiLayer:addChild(m_rootLayer);
+-- 		NpcInfoManager.getHuntTaskInfo(710001,recieveDataOnHunter)
+-- 	end
+
+-- end
+-- function close()
+-- 	if(m_isOpen) then
+-- 		m_isOpen = false;
+-- 		local  uiLayer = getGameLayer(SCENE_UI_LAYER);
+-- 		uiLayer:removeChild(m_rootLayer,false);
+-- 	end
+-- end
+
+-- function remove()
+-- 	if (m_isCreate) then
+-- 		m_isCreate = false;
+-- 		m_rootLayer:removeAllChildrenWithCleanup(true);	
+-- 		m_rootLayer:release();
+-- 		m_rootLayer= nil
+-- 	end
+-- end
+-- function split(str, delimiter)
+-- 	if str==nil or str=='' or delimiter==nil then
+-- 		return nil
+-- 	end
+	
+--     local result = {}
+--     for match in (str..delimiter):gmatch("(.-)"..delimiter) do
+--         table.insert(result, tonumber(match))
+--     end
+--     return result
+-- end
